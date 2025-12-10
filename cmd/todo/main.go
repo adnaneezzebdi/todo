@@ -33,12 +33,15 @@ func main() {
 
 	switch command {
 	case "add":
-
+		handleAdd(os.Args[2:])
 	case "list":
-
+		handleList()
 	case "complete":
-
+		handleComplete(os.Args[2:])
 	case "delete":
+		handleDelete(os.Args[2:])
+	default:
+		println("comando sbagliato")
 	}
 }
 
