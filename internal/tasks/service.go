@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+var ErrNotFound = errors.New("task not found")
+
 func Add(title string) error {
 	tasks, err := LoadTasks()
 	if err != nil {
@@ -25,21 +27,28 @@ func List() ([]Task, error) {
 	return LoadTasks()
 }
 
-func Complete(id int) error {
+func Complete(id int) (Task, error) {
 	tasks, err := LoadTasks()
 	if err != nil {
-		return err
+		return Task{}, err
 	}
 
 	for i := range tasks {
 		if tasks[i].ID == id {
 			now := time.Now()
 			tasks[i].Done = true
-			tasks[i].CompleteAt = &now
-			return SaveTasks(tasks)
+			tasks[i].CompletedAt = &now
+
+			err = SaveTasks(tasks)
+			if err != nil {
+				return Task{}, err
+			}
+
+			return tasks[i], nil
 		}
 	}
-	return errors.New("task non trovata")
+
+	return Task{}, ErrNotFound
 }
 
 func Delete(id int) error {
@@ -58,7 +67,7 @@ func Delete(id int) error {
 	}
 
 	if index == -1 {
-		return errors.New("task non trovata")
+		return ErrNotFound
 	}
 
 	tasks = append(tasks[:index], tasks[index+1:]...)

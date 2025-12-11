@@ -78,7 +78,8 @@ func handleComplete(args []string) {
 		return
 	}
 
-	if err := tasks.Complete(id); err != nil {
+	_, err = tasks.Complete(id)
+	if err != nil {
 		fmt.Println("errore:", err)
 		return
 	}
