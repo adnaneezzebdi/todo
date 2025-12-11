@@ -1,5 +1,6 @@
 package cli
 
+/*
 import (
 	"fmt"
 	"os"
@@ -114,3 +115,4 @@ func printHelp() {
 	println("  todo complete <id>")
 	println("  todo delete <id>")
 }
+*/
