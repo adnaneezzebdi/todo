@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	connString := "postgres://postgres:1234@localhost:5432/todo?sslmode=disable"
+	connString := "postgresql://dbtodo_wiwr_user:d55Uobzael8R79BDlNwfeFlDBmN7PvSW@dpg-d4vt6cruibrs73dn44v0-a.frankfurt-postgres.render.com/dbtodo_wiwr?sslmode=require"
 
 	_, err := tasks.InitDB(connString)
 	if err != nil {
@@ -20,13 +20,13 @@ func main() {
 
 	args := os.Args[1:]
 
-	// --- CLI MODE ---
+	// cli
 	if len(args) > 0 {
 		runCLI(repo, args)
 		return
 	}
 
-	// --- SERVER MODE ---
+	// server
 	fmt.Println("Server HTTP attivo su http://localhost:8080")
 	httpapi.Startserver(repo)
 }
